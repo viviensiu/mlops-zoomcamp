@@ -19,3 +19,14 @@ Links:
 * If using Github Codespaces, you should also install Anaconda distribution of Python as well to use Jupyter Notebook within Codespaces.
 * Note that AWS EC2 instance isn't necessary for env setup as long as you could run Docker, Jupyter Notebook and Python on local workstation.
 
+**Skipped optional unit 1.3**
+
+**1.4 Course overview**
+What we would learn from this course:
+* Experiment tracker - log the metrics of various experimental models' performances.
+* Model registry - a repository of the experimental models for reproducibility.
+* ML Pipelines - a parameterisable ML process flow for consistent inferencing process from data loading, preprocessing to training and validating the model(s).
+* Model Deployment - Methods to serve the optimal model for usage.
+* Model Monitoring - Tracking the served model's performance on unseen data to ensure it does its job well. If not, this indicates model drift and the model should be retrained and redeployed to correct the drift.
+* Best practices to automate the above, making the codes easily maintainable, plus easy to distribute and scale using Dockers and Kubernetes.
+* And finally the different levels of ML Ops maturity from 0 to 4, where 0 indicates no ML Ops present and 4 means no human intervention present in the practices above. 
