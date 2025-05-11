@@ -41,3 +41,4 @@ What we would learn from this course:
 * We need to be pragmatic when it comes to the level of ML Ops we should apply, to ensure resources are utilised properly and the extent suits our use cases.
 
 **Homework**
+* [Link to questions](https://github.com/DataTalksClub/mlops-zoomcamp/blob/main/cohorts/2025/01-intro/homework.md)
