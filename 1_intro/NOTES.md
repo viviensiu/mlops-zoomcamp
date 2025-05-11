@@ -39,3 +39,5 @@ What we would learn from this course:
 * Level 3: Automated deployment. Easy to deploy model with minimal/no human intervention. Can be a part of training pipeline where model is deployed automatically after training. Also contains A/B test to test 2 versions of models to see which one is better, and model monitoring.
 * Level 4: Full ML Ops automation, i.e. automated training, deployment, and monitoring. Production systems are automatically improved with new models.
 * We need to be pragmatic when it comes to the level of ML Ops we should apply, to ensure resources are utilised properly and the extent suits our use cases.
+
+**Homework**
