@@ -77,7 +77,7 @@ Links:
     * Creates and manages registered models
     * Managing model stages
     * Getting run details without being inside a with ```mlflow.start_run()```: block.
-* Note: always set tracking URI beforehand.    
+* Note: always set tracking URI beforehand. **You cannot use a local filesystem for model registry**, it needs to be a SQLAlchemy compatible DB (e.g. SQLite).    
 * Useful functions via **MLflow Client** object:
     * ```list_experiments()```: list past experiments done.
     * ```create_experiment()```: create new experiment.
@@ -100,8 +100,20 @@ Links:
         * no tracking server.
         * localhost.
         * remote.
-* Scenario 1: One Data Scientist joining an ML competition
-* 
+* [Scenario 1: One Data Scientist joining an ML competition](https://github.com/viviensiu/mlops-zoomcamp/blob/main/2_experiment_tracking/running-mlflow-examples/scenario-1.ipynb)
+    * Simple setup: no tracking and use local filesystems only.
+    * MLflow assumes you want to use local filesystem for URI if one is not specified. You could retrieve the local uri using ```mlflow.get_tracking_uri()```.
+    * Experiment info are stored inside ```mlruns > 0``` where ```meta.yaml``` contains expriment name, id and artifact location.
+    * When more experiment runs are executed, you will see more subfolders named with numbers inside ```mlruns```. This represent the runs, and you can find the artifacts, metrics, params, tags and models for each run in here (if they are logged).
+    * As it is stored on local filesystem, model registry cannot be used here. You probably don't need it anyway since it's a non-productionised scenario.
+    * When running ```mlflow ui```, note that it matters where the path is where this is executed, as you may have multiple ```mlruns``` folders and therefore the ```mlflow ui``` may only refer to a different mlruns folder. Hence the steps to take:
+        * Navigate to the correct working folder.
+        * Execute ```mlflow ui```.
+        * Check localhost. If it's not working, try clearing browser data. 
+* [Scenario 2: A cross-functional team with one data scientist working on an ML model](https://github.com/viviensiu/mlops-zoomcamp/blob/main/2_experiment_tracking/running-mlflow-examples/scenario-2.ipynb)
+    * Setup: tracking needed for cross-collaboration, backend: DB so model registry can be used. Artfacts: local filesystem.
+    * Setup backend using ```mlflow server --backend-store-uri sqlite:///backend.db```. If error `default-artifact-root is required`, include in command ```--default-artifact-root ./artifacts_local```. You can of course use any other name for artifact root.
+    * 
 
 
 **Other Resources**
