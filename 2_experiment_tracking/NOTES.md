@@ -113,6 +113,9 @@ Links:
 * [Scenario 2: A cross-functional team with one data scientist working on an ML model](https://github.com/viviensiu/mlops-zoomcamp/blob/main/2_experiment_tracking/running-mlflow-examples/scenario-2.ipynb)
     * Setup: tracking needed for cross-collaboration, backend: DB so model registry can be used. Artfacts: local filesystem.
     * Setup backend using ```mlflow server --backend-store-uri sqlite:///backend.db```. If error `default-artifact-root is required`, include in command ```--default-artifact-root ./artifacts_local```. You can of course use any other name for artifact root.
+* [Scenario 3: Multiple data scientists working on multiple ML models](https://github.com/viviensiu/mlops-zoomcamp/blob/main/2_experiment_tracking/running-mlflow-examples/scenario-3.ipynb) 
+    * Setup: Tracking yes since it's multiple data scientists collaborating, backend store in DB for model registry, artifacts store in cloud for remote collaboration.
+    * The instructions on setting up AWS EC2 and s3 bucket can be found [here]().
     * 
 
 
