@@ -88,7 +88,20 @@ Links:
     * ```transition_model_version_stage()```: transition model stage.
     * ```update_model_version()```: update version and add optional description.
 
-
+**2.6 MLflow in practice**
+* Configuring MLflow for different scenarios depends on the context to be considered. There are 3 main aspects:
+    * Backend Store: where MLflow saves all metadata about the experiment.
+        * local filesystem.
+        * SQLAlchemy compatible DB (e.g. SQLite). 
+    * Artifacts store: where to store the artifacts (files, visualisations).
+        * local filesystem.
+        * remote (e.g. s3 bucket).
+    * Tracking server: Any need for tracking?
+        * no tracking server.
+        * localhost.
+        * remote.
+* Scenario 1: One Data Scientist joining an ML competition
+* 
 
 
 **Other Resources**
