@@ -115,8 +115,9 @@ Links:
     * Setup backend using ```mlflow server --backend-store-uri sqlite:///backend.db```. If error `default-artifact-root is required`, include in command ```--default-artifact-root ./artifacts_local```. You can of course use any other name for artifact root.
 * [Scenario 3: Multiple data scientists working on multiple ML models](https://github.com/viviensiu/mlops-zoomcamp/blob/main/2_experiment_tracking/running-mlflow-examples/scenario-3.ipynb) 
     * Setup: Tracking yes since it's multiple data scientists collaborating, backend store in DB for model registry, artifacts store in cloud for remote collaboration.
-    * The instructions on setting up AWS EC2 and s3 bucket can be found [here]().
-    * 
+    * The instructions on setting up AWS EC2 and s3 bucket can be found [here](https://github.com/viviensiu/mlops-zoomcamp/blob/main/2_experiment_tracking/mlflow_on_aws.md).
+
+**2.7 MLflow: Benefits, limitations and alternatives**
 
 
 **Other Resources**
