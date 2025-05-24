@@ -54,11 +54,42 @@ Links:
 **2.4 Model Management**
 * Covers experiment tracking, model versioning, model deployment and scaling of hardware.
 * This helps to ensure that different models resulted from experiment runs are tracked and managed accordingly, as different models may cater to different scenarios, e.g. more or less resource-intensive (scaling), model versions may rely on different dependencies, and so on.
+* ```mlflow.set_tracking_uri()```: sets the database URI for saving tracking info. **This needs to be done first**.
 * ```mlflow.log_artifact()```: Logs and saves the model by passing in local path and artifact path, saved artifacts could be found under ```Artifacts > model``` in MLflow.
 * ```mlflow.<framework>.log_model()```: Logs and saves the model by passing in model object and artifact path, which could be found under ```Artifacts > (artifact path)``` in MLflow.
 * When saved using ```log_model()```, the model contains .yaml file, requirements.txt and the model itself. .yaml provides info on the model environment, which may include packages not called by the experiment but from the conda env it ran in.
 * Note that you could also use MLflow to save feature transformation model (e.g. DictVectorizer model) using the methods above.
 * As in 2.3, you could deploy the logged model in either Python or the framework flavor under the ```Make Predictions``` section that's available when scroll further down within ```Artifacts```.
+
+**2.5 Model Registry**
+* A model registry in MLflow is useful for tracking models that are ready for different stages. E.g. when models are ready for production deployment, this could be marked by the experimentation team like so, and the deployment team could just look at the registry and deploy them as indicated.
+* Models could also be registered depending on different stages such as staging, production and archive, which helps to manage models.
+* Note: Model registry is not used for deployment but for labelling purposes only.
+* Registering models in MLflow:
+    * Under ```Artifacts```, click on ```Register Model```.
+    * Either ```Create New Model``` > key in new model name > register.
+    * Or select an existing model name and register under that name.
+* Under ```Models``` tab, you can find the registered models and the different versions it has. You could even add a description and tags.
+* Click on different model version provide you the ```source run``` it's linked to, which then shows you the logged info associated with this version. Each version could have its own description and tags as well.
+* You could also change the ```Stage``` transition to staging, production and archived.
+* To interact with the MLflow tracking server **outside of a run context**, you use **MLflow Client** instead. It is a lower-level API helps you to do things such as 
+    * Querying past experiments
+    * Creates and manages registered models
+    * Managing model stages
+    * Getting run details without being inside a with ```mlflow.start_run()```: block.
+* Note: always set tracking URI beforehand.    
+* Useful functions via **MLflow Client** object:
+    * ```list_experiments()```: list past experiments done.
+    * ```create_experiment()```: create new experiment.
+    * ```search_runs()```: query and filter past runs.
+    * ```register_model()```: register new model.
+    * ```list_registered_models()```: list all registered models in registry.
+    * ```get_latest_versions()```: returns a list of model versions and metadata such as status.
+    * ```transition_model_version_stage()```: transition model stage.
+    * ```update_model_version()```: update version and add optional description.
+
+
+
 
 **Other Resources**
 * [Neptune.ai: Why ML Experiment Tracking matters](https://www.linkedin.com/pulse/ml-experiment-tracking-what-why-matters-how-implement-jakub-czakon/)
