@@ -50,13 +50,19 @@
 * Note that the best model may not be suitable for you due to resource constraints (requires larger space, more CPU-demanding) so you need to decide base on your own use cases.
 * After selecting the best model, you could train a final model with those hyperparameters.
 * Depending on the model framework, MLflow allows [autologging](https://mlflow.org/docs/latest/tracking/autolog). E.g. with XGBoost ```mlflow.xgboost.autolog()```. It not only logs a more complete set of hyperparameters but also feature importances, packages version used, the conda env, and the MLflow model. The `.model` file provides info on how to run this model based on `flavors`, e.g. you can it as a python function or an xgboost for this module's sample code. If you click on `model` folder inside MLflow UI, you can see sample codes on how to make predictions using the logged model.
+* Note: After enabling `autolog()`, you'll need to wrap the desired logging outputs with `with mlflow.start_run()` as well.
 
 **2.4 Model Management**
 * Covers experiment tracking, model versioning, model deployment and scaling of hardware.
 * This helps to ensure that different models resulted from experiment runs are tracked and managed accordingly, as different models may cater to different scenarios, e.g. more or less resource-intensive (scaling), model versions may rely on different dependencies, and so on.
-* ```mlflow.set_tracking_uri()```: sets the database URI for saving tracking info. **This needs to be done first**.
-* ```mlflow.log_artifact()```: Logs and saves the model by passing in local path and artifact path, saved artifacts could be found under ```Artifacts > model``` in MLflow.
-* ```mlflow.<framework>.log_model()```: Logs and saves the model by passing in model object and artifact path, which could be found under ```Artifacts > (artifact path)``` in MLflow.
+* Start MLflow tracking server:
+    ```bash
+    mlflow server --backend-store-uri <YOUR URI HERE> --artifacts-destination <YOUR ARTIFACTS STORE HERE>
+    ```
+* Then use the following in your code:
+    * ```mlflow.set_tracking_uri()```: sets the database URI for saving tracking info. **This needs to be done first**.
+    * ```mlflow.log_artifact()```: Logs and saves the model by passing in local path and artifact path, saved artifacts could be found under ```Artifacts > model``` in MLflow.
+    * ```mlflow.<framework>.log_model()```: Logs and saves the model by passing in model object and artifact path, which could be found under ```Artifacts > (artifact path)``` in MLflow.
 * When saved using ```log_model()```, the model contains .yaml file, requirements.txt and the model itself. .yaml provides info on the model environment, which may include packages not called by the experiment but from the conda env it ran in.
 * Note that you could also use MLflow to save feature transformation model (e.g. DictVectorizer model) using the methods above.
 * As in 2.3, you could deploy the logged model in either Python or the framework flavor under the ```Make Predictions``` section that's available when scroll further down within ```Artifacts```.
