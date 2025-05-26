@@ -1,4 +1,4 @@
-Links:
+**Links**:
 * [unit 2 repo](https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/02-experiment-tracking)
 
 **2.1 intro**
@@ -118,8 +118,27 @@ Links:
     * The instructions on setting up AWS EC2 and s3 bucket can be found [here](https://github.com/viviensiu/mlops-zoomcamp/blob/main/2_experiment_tracking/mlflow_on_aws.md).
 
 **2.7 MLflow: Benefits, limitations and alternatives**
-
+* Remote tracking server can be easily deployed to the cloud. 
+* Benefits:
+    * Share experiments with other data scientists.
+    * Collaboration to build and deploy models.
+    * More visibility of the data science efforts to potential stakeholders.
+* Issues:
+    * Security: To mitigate, restrict access or use VPN.
+    * Scalability: To mitigate, check out [deploying MLflow on AWS Fargate](https://aws.amazon.com/blogs/machine-learning/managing-your-machine-learning-lifecycle-with-mlflow-and-amazon-sagemaker/), or [MLflow at company scale - Jean-Denis Lesage](https://youtu.be/S27sM0K0gNw?si=fc3ht9Don_ovngbP). 
+    * Isolation: To mitigate, define naming standards for experiments, models and have a default set of tags, restrict access to artifacts (e.g. use s3 buckets living in different AWS accounts). 
+* Limitations of MLflow (open-source version):
+    * Authentication & Users: No authentication and not possible to create user groups. However the MLflow that's integrated within Databricks is able to do so.
+    * Data versioning: not available. This is important to ensure full reproducibility of the trained model. There are other ways to manage this, e.g. track the dataset path, create hash for the dataset or save the dataset as an artifact if it is small enough.
+    * Model/Data monitoring & alert: Outside of MLflow scope and there are more suitable tools to do so.
+* MLflow alternatives (require payment):
+    * [Neptune.ai](https://neptune.ai/)
+    * [Comet](https://www.comet.com/site/products/ml-experiment-tracking/)
+    * [Weights & Biases](https://wandb.ai/site/)
+    * and many more, see [Neptune.ai: Comparison of ML Tracking Tools](https://neptune.ai/blog/best-ml-experiment-tracking-tools).
 
 **Other Resources**
 * [Neptune.ai: Why ML Experiment Tracking matters](https://www.linkedin.com/pulse/ml-experiment-tracking-what-why-matters-how-implement-jakub-czakon/)
 
+**Homework**
+* [Link to questions](https://github.com/DataTalksClub/mlops-zoomcamp/blob/main/cohorts/2025/02-experiment-tracking/homework.md)

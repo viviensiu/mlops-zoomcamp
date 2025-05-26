@@ -1,4 +1,4 @@
-Links:
+**Links**:
 * [unit 1 repo](https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/01-intro)
 
 **1.1 Intro**
