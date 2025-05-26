@@ -6,7 +6,10 @@ import mlflow
 from mlflow.entities import ViewType
 from mlflow.tracking import MlflowClient
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
+# my code 
+# from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
+# 
 
 HPO_EXPERIMENT_NAME = "random-forest-hyperopt"
 EXPERIMENT_NAME = "random-forest-best-models"
@@ -36,9 +39,11 @@ def train_and_log_model(data_path, params):
         rf.fit(X_train, y_train)
 
         # Evaluate model on the validation and test sets
-        val_rmse = mean_squared_error(y_val, rf.predict(X_val), squared=False)
+        # val_rmse = mean_squared_error(y_val, rf.predict(X_val), squared=False)
+        val_rmse = root_mean_squared_error(y_val, rf.predict(X_val))
         mlflow.log_metric("val_rmse", val_rmse)
-        test_rmse = mean_squared_error(y_test, rf.predict(X_test), squared=False)
+        # test_rmse = mean_squared_error(y_test, rf.predict(X_test), squared=False)
+        test_rmse = root_mean_squared_error(y_test, rf.predict(X_test))
         mlflow.log_metric("test_rmse", test_rmse)
 
 
@@ -72,10 +77,26 @@ def run_register_model(data_path: str, top_n: int):
     # Select the model with the lowest test RMSE
     experiment = client.get_experiment_by_name(EXPERIMENT_NAME)
     # best_run = client.search_runs( ...  )[0]
+    # my code
+    best_run = client.search_runs(
+        experiment_ids=experiment.experiment_id,
+        run_view_type=ViewType.ACTIVE_ONLY,
+        max_results=1,
+        order_by=["metrics.test_rmse ASC"]
+    )
+    #
 
     # Register the best model
     # mlflow.register_model( ... )
-
+    # my code 
+    # for b in best_run:
+    #     print(f'best run info run_id: {b.info.run_id}')
+    run_id = best_run[0].info.run_id
+    mlflow.register_model(
+        model_uri=f"runs:/{run_id}/models",
+        name='best_run_test_set'
+    )
+    # 
 
 if __name__ == '__main__':
     run_register_model()
