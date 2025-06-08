@@ -55,7 +55,7 @@
     * To allow users to pass in parameters outside of script, use `argparse.ArgumentParser()`.
 * Ensure script is working by end-to-end test.
 
-**The following notes are based on 2023 Prefect videos**
+## The following notes are based on 2023 Prefect videos
 **3.1 Intro to Workflow Orchestration**
 * [Prefect](https://www.prefect.io/) allows you to orchestrate & observe your Python workflows at scale.
 * [Prefect](https://www.prefect.io/) provides tools to work with complex systems so you can stop wondering about your workflows.
@@ -104,7 +104,29 @@
     * `@task`: configurable for retries, logging and so on. Make sure to set `log_prints=True` to enable logging to the UI.
     * `@flow`: decorator to execute a Prefect flow. Make sure to set `log_prints=True` to enable logging to the UI.
     
+**3.3 Prefect Workflow**
+* Explains how to convert a jupyter notebook `duration_prediction_explore.ipynb` to `orchestrate_pre_prefect.py`. **Note**: The codes are outdated since 2023 and some codes would need to be updated, e.g. sklearn mean_squared_error.
+* The basic notebook clean up is similar to the 2025 run of unit 3.2, refer those notes.
+* To add observability and orchestration with Prefect, the following is used:
+    * `@task(retries=..., retry_delay_seconds=..., caching=...)`: To set retries, delays between retries and caching for saving.
+    * `@task(log_print=True)`: log print outs.
+    * `@flow`: to run tasks.
+* Refer `orchestrate.py` for the Prefect codes.
 
+**3.4 Deploying Your Workflow**
+* We use `prefect project` for deployment. Here we assume that our script is already wrapped with Prefect decorators.
+* Step 1 `prefect project init`: initialise the files for deployment. Creates:
+    * `.prefectignore`
+    * `prefect.yaml`: file to configure deployment build, push and pull steps.
+    * `deployment.yaml`:
+* Step 2 login to Prefect cloud `prefect cloud login` or start local server `prefect server start`.
+* Step 3 start a worker that polls your workpool `prefect worker start -p <pool name> -t process` or via the UI:
+    * `Work Pools > Create`: enter name, type=`Process`. Click create.
+* Step 4 Deploy your flow `prefect deploy <script name>`:<flow decorated function to start within the script> -n <flow name> -p <work pool created in step 3>'
+* Step 5 start a run of the deployed flow from terminal `prefect deployment run <flow name from step 4>` or inside UI:
+    * `Flows --> <flow decorated function to start within the script> --> <flow name> --> (...) menu --> quick run`.
+    * You should see the completed run, logs and etc under UI > `Flow Runs`.
+* ![image of Prefect ]
 
 
 
