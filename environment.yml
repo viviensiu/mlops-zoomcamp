@@ -12,5 +12,5 @@ dependencies:
   - scikit-learn
   - seaborn
   - xgboost
-  - prefect
+  - websockets
 prefix: /Users/viviensiew/anaconda3/envs/exp-tracking-env

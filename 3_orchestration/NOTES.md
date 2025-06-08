@@ -84,16 +84,21 @@
     * Subflow: flow called by another flow.
 * In a Prefect workflow, you'll require task and flow decorators to convert existing scripts into workflows. Arguments are accepted for these decorators.
 * Environment setup: 
-    * Download the `requirements.txt` in this folder.
+    * **Note**: I have post-setup issues if setup using the original `requirements.txt`. Different post-setup issues if I use `conda install prefect` in conda env `exp-tracking-env` setup since Unit 2.
+    * The issues surface when I try to run `prefect server start`.
+    * The issues resolved when I run the following on my Mac arm64:
     ```bash
-    conda create -n prefect-ops python==3.9.12
-    conda activate prefect-ops
-    pip install -r requirements.txt
+    conda create -n prefect-env python==3.12
+    conda activate prefect-env
+    pip install -U prefect --pre
     ```
-    * Alternatively to reuse the `exp-tracking-env` that was setup since Unit 2, you could just:
-    ```bash
-    conda activate exp-tracking-env
-    conda install prefect
-    ```
-* Once installed, start Prefect server using `prefect server start`. 
+    * Reference for the setup that works: [Getting started with Prefect part 1 - Nate from Prefect](https://youtu.be/Y1eDm50BDIU?si=ckRR2Ku2kd1hEbxI)
+    * **Note**: I could also run `pip install -U prefect` in conda env `exp-tracking-env`. Starting prefect server after this would create some IO exceptions that is ignored by the Prefect server.
+* Start Prefect server: `prefect server start`.
+* Copy and run the Prefect API url in a new command prompt window (env activated) to ensure we send our server metadata to the server's UI:
+    `prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api`
+* 
+
+
+
 
