@@ -1,0 +1,16 @@
+name: exp-tracking-env
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - boto3
+  - fastparquet
+  - hyperopt
+  - jupyter
+  - mlflow
+  - pandas
+  - scikit-learn
+  - seaborn
+  - xgboost
+  - prefect
+prefix: /Users/viviensiew/anaconda3/envs/exp-tracking-env
