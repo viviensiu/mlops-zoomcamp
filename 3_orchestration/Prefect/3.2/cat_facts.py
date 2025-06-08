@@ -1,7 +1,7 @@
 import httpx
 from prefect import flow, task
 
-
+# Prefect will attempt 4 retries and wait for 0.1 sec before rerun attempt.
 @task(retries=4, retry_delay_seconds=0.1, log_prints=True)
 def fetch_cat_fact():
     cat_fact = httpx.get("https://f3-vyx5c2hfpq-ue.a.run.app/")

@@ -1,6 +1,7 @@
 **Links**
 * [unit 3 repo]()
 * [2023 repo for Prefect](https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/cohorts/2023/03-orchestration/prefect)
+* [Prefect Python SDK API Documentation](https://reference.prefect.io/prefect/)
 
 **3.1 ML Pipeline**
 * Pipeline: sequence of steps, e.g. training pipeline would be a sequence of steps to train a model.
@@ -95,9 +96,14 @@
     * Reference for the setup that works: [Getting started with Prefect part 1 - Nate from Prefect](https://youtu.be/Y1eDm50BDIU?si=ckRR2Ku2kd1hEbxI)
     * **Note**: I could also run `pip install -U prefect` in conda env `exp-tracking-env`. Starting prefect server after this would create some IO exceptions that is ignored by the Prefect server.
 * Start Prefect server: `prefect server start`.
-* Copy and run the Prefect API url in a new command prompt window (env activated) to ensure we send our server metadata to the server's UI:
+* Copy and run the Prefect API url in a new terminal window (env activated) to ensure we send our server metadata to the server's UI:
     `prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api`
-* 
+* Test sample codes `cat_facts.py` and `cat_dog_facts.py` by running it with python in terminal. You should see a new flow run record captured in `Prefect UI > Runs`.
+* You could view a timeline and logs of this flow run by clicking on the flow run record in UI.
+* Prefect functions:
+    * `@task`: configurable for retries, logging and so on. Make sure to set `log_prints=True` to enable logging to the UI.
+    * `@flow`: decorator to execute a Prefect flow. Make sure to set `log_prints=True` to enable logging to the UI.
+    
 
 
 
