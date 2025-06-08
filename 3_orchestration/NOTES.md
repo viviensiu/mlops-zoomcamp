@@ -126,7 +126,7 @@
 * Step 5 start a run of the deployed flow from terminal `prefect deployment run <flow name from step 4>` or inside UI:
     * `Flows --> <flow decorated function to start within the script> --> <flow name> --> (...) menu --> quick run`.
     * You should see the completed run, logs and etc under UI > `Flow Runs`.
-* ![image of Prefect ]
+* ![image of Prefect create run deployment](https://github.com/viviensiu/mlops-zoomcamp/blob/main/3_orchestration/Prefect/Activity-create-run-deployment.png)
 
 
 
