@@ -23,8 +23,31 @@
 * **Goal**: Take a pickle file and put into a Flask application.    
 * **Note**: this is similar to what's done in ml zoomcamp deployment section. You will need some prior knowledge in Flask and Docker.
 * You will also need `pipenv` preinstalled to create a virtual env for the app.
+* **Reference**: `web-service` folder in unit 4.
 * **Steps**:
     * Find out `sklearn` version used as it needs to be compatible with the pickle file: `pip freeze | grep scikit-learn`.
     * Create the virtual env: `pipenv install scikit-learn==<version used> flask --python==<version used>`, this should create a new `pipfile` or add these packages into an existing `pipfile`.
     * Activate virtual env: `pipenv shell`.
-    * Create a script `predict.py` to run the web service codes. It loads the pickle file, receives incoming http request for user input and returns a http response for prediction.
+    * Create a script `predict.py` with Flask wrapper codes to handle the web service. It loads the pickle file, receives incoming http request for user input and returns a http response for prediction.
+    * Test the web service using `test.py` in a new terminal window. Before that, service the Flask web service by doing `python predict.py`.
+    * To solve the WSGI error message, setup Gunicorn: `pipenv install gunicorn`, then run `gunicorn --bind=0.0.0.0:<your port number> predict.py`.
+    * To solve the `no module named 'requests' error` in development env but skip it in production, we will need to install requests only in dev using `pipenv install --dev requests`.
+    * To package the app into Docker container:
+        * Create a `Dockerfile`.
+    * Build the Docker image with tag: `docker build -t ride-duration-prediction-service:v1 .`.
+    * Start the container in interactive mode, container deleted after stopped, and map host port to container port: `docker run -it --rm -p 9696:9696  ride-duration-prediction-service:v1`.
+
+ **4.3 Web-services: Getting the models from the model registry (MLflow)**
+ * **Reference**: `web-service-mlflow` folder in unit 4.
+ * **Note**: This video loads MLflow model of a specific experiment run that is stored in Amazon S3 bucket or any equivalent online source.
+ * **Steps**:
+    * Take the code from the previous video, i.e. `web-service`.
+    * Create a pipeline that contains both the model and the vectoriser so they don't need to be downloaded separately using mlflow tracking uri and mlflow client: `from sklearn.pipeline import make_pipeline`.
+    * Pipeline flow: create DictVectorizer or any vectoriser first, followed by the model.
+    * Log the pipeline in `mlflow.sklearn.log_model()` to include this in the artifacts.
+    * Modify `predict.py` to retrieve the logged MLflow pipeline using `run id`: `mlflow.pyfunc.load_model()`.
+    * Add mlflow package into pipfile: `pipenv install mlflow boto3`.
+    * We want to avoid hardcoding the tracking server inside the script because it cannot handle issues like when the server is down or we need to scale up, then another server instance needs to be created and therefore the server details will change. Hence we use env variables to pass in server info, run id and so on instead.
+
+ 
+
