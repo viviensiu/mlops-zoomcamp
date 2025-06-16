@@ -49,5 +49,17 @@
     * Add mlflow package into pipfile: `pipenv install mlflow boto3`.
     * We want to avoid hardcoding the tracking server inside the script because it cannot handle issues like when the server is down or we need to scale up, then another server instance needs to be created and therefore the server details will change. Hence we use env variables to pass in server info, run id and so on instead.
 
- 
+**4.4 Streaming: Deploying using AWS Lambda and Kinesis (Optional)**
+* Refer [this video](https://youtu.be/TCqr9HNcrsI?si=kkllG4BhwKEGwgJt) for the process.
 
+**4.5 Batch: Preparing a Scoring Script**
+* **Goal**: Deploy models in batch mode (offline mode).
+* **Use case**: To see how often the taxi drivers have the actual ride durations deviate from the predictions.
+* **Step**:
+    * Turn an experimental notebook into a notebook that applies the model. The training sections are removed since we focus on application, add unique IDs for each record using `uuid` package, parameterise the notebook to allow dynamic year month values to be passed in, put codes in functions, and save predicted results, difference between predictions and actual durations into a Parquet file. See `score.ipynb`.
+    * Turn `score.ipynb` into a script `score.py`: `jupyter nbconvert --to script score.ipynb`
+    * Add a main function to accept system arguments `sys.argv[.]` and clean up markdowns in `score.py`.
+    * Test running `score.py`, then upload to online storage e.g. AWS S3.
+* Tips for further improvement:
+    * Specify all dependencies e.g. using `pipenv`.
+    * Package into Docker Container. Schedule it to run in batch jobs e.g. ECS, Kubernetes or AWS Batch.
