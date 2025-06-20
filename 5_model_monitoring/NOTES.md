@@ -18,3 +18,34 @@
 * Non-batch mode:
     * Metrics are calculated continuously or incrementally, e.g. using moving windows, or in real-time.
 * Monitoring scheme: Starting from software service (batch/online mode), we build our monitoring on top of logged predictions. We have monitoring jobs to read the prediction logs by batch, analyse them, calculate some metrics and store them. These metrics are later on visualised on dashboards for monitoring.
+
+**5.2 Env Setup**
+* Create new folder `mkdir taxi_monitoring`.
+* In `taxi_monitoring` folder:
+    * `conda create -n py11 python=3.11`
+    * `conda activate py11`.
+* Create `requirements.txt`:
+    ```
+    prefect
+    tqdm
+    requests
+    joblib
+    pyarrow
+    psycopg
+    psycopg_binary
+    evidently==0.6.7
+    pandas
+    numpy
+    scikit-learn
+    jupyter
+    matplotlib
+    ```
+* Run `pip install -r requirements.txt` to install packages in this virtual env.
+* Create [`docker-compose.yml`]().
+* Create sub-folder `config` to store Grafana configurations. Inside, create `grafana_datasources.yaml` and `grafana_dashboards.yaml`.
+* Bring up the containers using `docker compose up --build`.
+* Try to access Grafana using `localhost:3000` with username and password equals `admin`. Grafana will ask you to change the password afterwards.
+* Also try to access Adminer at `localhost:8080`.
+* If all the above works, the env setup is completed.
+
+
