@@ -65,3 +65,28 @@
     * Define reporting metrics with `Report`.
     * Run report generation with `report.run(reference_data=..., current_data=..., column_mapping=...)`.
 * The generated report can be viewed in Notebook using `report.show(mode='inline')`, or converted to dictionary to pull out the metrics for further use `report.as_dict()`.
+
+**5.5 Evidently Monitoring Dashboard**
+* We will be using [Evidently](https://www.evidentlyai.com/) to build a monitoring dashboard.
+* Steps:
+    * Import `DataDriftPreset`: A base for data quality monitoring.
+    * Import `Workspace`: A base to store our data.
+    * Import `DashboardPanelCounter, DashboardPanelPlot, CounterAgg, PanelValue, PlotType, ReportFilter, WidgetSize`: Configure the dashboard.
+    * Create the local workspace with `Workspace`.
+    * Create the project in this workspace `ws.create_project()`, add a project description `project.description` and save it (`project.save()`).
+    * Build a report `Report` and add it to the workspace to track the project progress. You could add a specific `timestamp` in the report to track plots for this specific date.
+    * Calculate the report `report.run()`, preview it by invoking the report object itself, if you like it then you can add it to the workspace: `ws.add_report(project.id, report)`.
+* We could view the report directly in :
+    * To view all Evidently commands: `evidently ui --help`
+    * Start UI service: `evidently ui`.
+    * To view the report as per preview, first click on the correct project, go to `Reports`, navigate to the right report ID, then click on `View`.
+* Steps for adding a dashboard into the project:
+    * `project.dashboard.add_panel(DashboardPanelCounter(...))`.
+    * The panels could be made up of different plots as well using `DashboardPanelPlot` and specify the plot type, e.g. bar plot: `plot_type=PlotType.BAR`.
+    * The displayed values are configured under `values=[PanelValue(...)]`.
+    * Don't forget to save your project! `project.save()`.
+    * Refresh your Evidently UI and you should be able to see the dashboard under the project's `Dashboard` tab.
+* 
+
+**References**
+* [Evidently documentation](https://docs.evidentlyai.com/introduction).
