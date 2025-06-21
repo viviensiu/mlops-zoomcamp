@@ -89,11 +89,11 @@
 
 **5.6 Dummy Monitoring**
 * **Goal**: We will attempt to calculate some dummy metrics, save into database and try to access it via Grafana.
-* We will run [dummy_metrics_calculation.py]() to generate dummy metrics.
+* We will run [dummy_metrics_calculation.py](https://github.com/viviensiu/mlops-zoomcamp/blob/main/5_model_monitoring/taxi_monitoring/dummy_metrics_calculation.py) to generate dummy metrics.
 * Steps:
     * Make sure Grafana and Adminer is up by `docker-compose up --build`.
     * Once the containers are up, execute `python dummy_metrics_calculation.py`.
-    * Once a few iterations have passed, we can login to Adminer via `localhost:8080` with the same username, password and database `test` specified in [dummy_metrics_calculation.py]() to see the random data that was created.
+    * Once a few iterations have passed, we can login to Adminer via `localhost:8080` with the same username, password and database `test` specified in [dummy_metrics_calculation.py](https://github.com/viviensiu/mlops-zoomcamp/blob/main/5_model_monitoring/taxi_monitoring/dummy_metrics_calculation.py) to see the random data that was created.
 * Add a new Grafana dashboard:
     * Login to Grafana. Note that if the previous Docker containers are removed then login with the default `admin` username and password.
     * `Add new dashboard` > `New Panel` > under `Query` >  toggle from Builder to Code, and copy paste the following:
