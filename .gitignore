@@ -2,3 +2,5 @@
 **/mlruns/
 **/artifacts/
 *.db
+*.bin
+*.parquet

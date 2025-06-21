@@ -51,9 +51,12 @@
 
 **5.3 Prepare reference and model**
 * Create two sub-folders: `models` and `data`.
-* Create a baseline model [`baseline_model_nyc_taxi_data.ipynb`]() which will:
+* Create a baseline model [`baseline_model_nyc_taxi_data.ipynb`](https://github.com/viviensiu/mlops-zoomcamp/blob/main/5_model_monitoring/taxi_monitoring/baseline_model_nyc_taxi_data.ipynb) which will:
     * Download NYC taxi datasets for Jan and Feb 2022.
     * Preprocess data and split into training and validation sets.
     * Train a baseline model using `LinearRegression` model.
+    * Evaluate model on validation data using MAE metric.
+    * **Save model and reference data for monitoring**: The reference data provides a baseline data distribution to be compared against latest data to identify data drifts which causes performance drop.
 
-
+**5.4 Evidently metrics calculation**
+* 
