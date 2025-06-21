@@ -59,4 +59,9 @@
     * **Save model and reference data for monitoring**: The reference data provides a baseline data distribution to be compared against latest data to identify data drifts which causes performance drop.
 
 **5.4 Evidently metrics calculation**
-* 
+* [Evidently](https://www.evidentlyai.com/) provides the convenience of computing various metrics for different ML aspects which is useful for monitoring.
+* We begin by: 
+    * Define column mappings of target, prediction, numerical and categorical columns in `ColumnMapping`.
+    * Define reporting metrics with `Report`.
+    * Run report generation with `report.run(reference_data=..., current_data=..., column_mapping=...)`.
+* The generated report can be viewed in Notebook using `report.show(mode='inline')`, or converted to dictionary to pull out the metrics for further use `report.as_dict()`.
