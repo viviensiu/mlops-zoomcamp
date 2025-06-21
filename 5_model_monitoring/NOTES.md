@@ -41,11 +41,19 @@
     matplotlib
     ```
 * Run `pip install -r requirements.txt` to install packages in this virtual env.
-* Create [`docker-compose.yml`]().
+* Create [`docker-compose.yml`](https://github.com/viviensiu/mlops-zoomcamp/blob/main/5_model_monitoring/taxi_monitoring/docker-compose.yml).
 * Create sub-folder `config` to store Grafana configurations. Inside, create `grafana_datasources.yaml` and `grafana_dashboards.yaml`.
 * Bring up the containers using `docker compose up --build`.
-* Try to access Grafana using `localhost:3000` with username and password equals `admin`. Grafana will ask you to change the password afterwards.
+* Try to access Grafana using `localhost:3000` with username and password equals `admin`. Grafana will ask you to change the password afterwards. Personal note: local Grafana password is changed to `.....1234`.
 * Also try to access Adminer at `localhost:8080`.
 * If all the above works, the env setup is completed.
+* To bring down the containers, in a new terminal, execute `docker-compose down`.
+
+**5.3 Prepare reference and model**
+* Create two sub-folders: `models` and `data`.
+* Create a baseline model [`baseline_model_nyc_taxi_data.ipynb`]() which will:
+    * Download NYC taxi datasets for Jan and Feb 2022.
+    * Preprocess data and split into training and validation sets.
+    * Train a baseline model using `LinearRegression` model.
 
 
