@@ -1,5 +1,5 @@
 **Links**
-* [unit 5 repo]()
+* [unit 5 repo](https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/05-monitoring)
 
 **5.1 Intro to Monitoring**
 * Often in production, model performance starts to degrade after some time and we need to account for it through monitoring.
@@ -67,8 +67,8 @@
 * The generated report can be viewed in Notebook using `report.show(mode='inline')`, or converted to dictionary to pull out the metrics for further use `report.as_dict()`.
 
 **5.5 Evidently Monitoring Dashboard**
-* We will be using [Evidently](https://www.evidentlyai.com/) to build a monitoring dashboard.
-* Steps:
+* **Goal**: We will be using [Evidently](https://www.evidentlyai.com/) to build a monitoring dashboard.
+* **Steps**:
     * Import `DataDriftPreset`: A base for data quality monitoring.
     * Import `Workspace`: A base to store our data.
     * Import `DashboardPanelCounter, DashboardPanelPlot, CounterAgg, PanelValue, PlotType, ReportFilter, WidgetSize`: Configure the dashboard.
@@ -86,7 +86,26 @@
     * The displayed values are configured under `values=[PanelValue(...)]`.
     * Don't forget to save your project! `project.save()`.
     * Refresh your Evidently UI and you should be able to see the dashboard under the project's `Dashboard` tab.
-* 
+
+**5.6 Dummy Monitoring**
+* **Goal**: We will attempt to calculate some dummy metrics, save into database and try to access it via Grafana.
+* We will run [dummy_metrics_calculation.py]() to generate dummy metrics.
+* Steps:
+    * Make sure Grafana and Adminer is up by `docker-compose up --build`.
+    * Once the containers are up, execute `python dummy_metrics_calculation.py`.
+    * Once a few iterations have passed, we can login to Adminer via `localhost:8080` with the same username, password and database `test` specified in [dummy_metrics_calculation.py]() to see the random data that was created.
+* Add a new Grafana dashboard:
+    * Login to Grafana. Note that if the previous Docker containers are removed then login with the default `admin` username and password.
+    * `Add new dashboard` > `New Panel` > under `Query` >  toggle from Builder to Code, and copy paste the following:
+    ```sql
+    SELECT
+    $__time(timestamp),
+    value1
+    FROM dummy_metrics 
+    WHERE $__timeFilter(timestamp)
+    ORDER BY timestamp
+    ```
+    * Click `Run Query` and toggle the time range to see the different visualisations displayed on the dashboard.   
 
 **References**
 * [Evidently documentation](https://docs.evidentlyai.com/introduction).
