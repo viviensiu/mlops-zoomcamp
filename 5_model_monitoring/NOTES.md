@@ -173,5 +173,8 @@
     * We could also run reports with test suites to support analysis and debugging: `Report(metrics = [DataDriftPreset()])`. The report can either be shown in notebook or exported as HTML format.
     * Notice that when the problematic data's distribution differs greatly from reference set, data drift is flagged by the predefined tests and can be viewed in the report. This helps with monitoring the issue and pinpoint where we need to do some debugging.
 
+**Homework**
+* [Link to questions](https://github.com/DataTalksClub/mlops-zoomcamp/blob/main/cohorts/2025/05-monitoring/homework.md)
+
 **References**
 * [Evidently documentation](https://docs.evidentlyai.com/introduction).

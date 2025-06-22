@@ -63,3 +63,6 @@
 * Tips for further improvement:
     * Specify all dependencies e.g. using `pipenv`.
     * Package into Docker Container. Schedule it to run in batch jobs e.g. ECS, Kubernetes or AWS Batch.
+
+**Homework**
+* [Link to questions](https://github.com/DataTalksClub/mlops-zoomcamp/blob/main/cohorts/2025/04-deployment/homework.md)
