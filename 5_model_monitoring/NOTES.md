@@ -90,7 +90,7 @@
 **5.6 Dummy Monitoring**
 * **Goal**: We will attempt to calculate some dummy metrics, save into database and try to access it via Grafana.
 * We will run [dummy_metrics_calculation.py](https://github.com/viviensiu/mlops-zoomcamp/blob/main/5_model_monitoring/taxi_monitoring/dummy_metrics_calculation.py) to generate dummy metrics.
-* Steps:
+* **Steps**:
     * Make sure Grafana and Adminer is up by `docker-compose up --build`.
     * Once the containers are up, execute `python dummy_metrics_calculation.py`.
     * Once a few iterations have passed, we can login to Adminer via `localhost:8080` with the same username, password and database `test` specified in [dummy_metrics_calculation.py](https://github.com/viviensiu/mlops-zoomcamp/blob/main/5_model_monitoring/taxi_monitoring/dummy_metrics_calculation.py) to see the random data that was created.
@@ -106,6 +106,61 @@
     ORDER BY timestamp
     ```
     * Click `Run Query` and toggle the time range to see the different visualisations displayed on the dashboard.   
+
+**5.7 Data Quality Monitoring**
+* We modify the script from 5.6 to incorporate Evidently monitoring as in Section 5.5.
+* See [evidently_metrics_calculation.py](https://github.com/viviensiu/mlops-zoomcamp/blob/main/5_model_monitoring/taxi_monitoring/evidently_metrics_calculation.py).
+* The script will:
+    * Read daily data from Feb 2022 onwards to simulate production usage by batch. In reality there will be data pipeline for reading data.
+    * Create column mapping and pass it into report object as in Section 5.5. 
+    * Extract current data and generate predictions.
+    * With historical and current data, run the report object to generate monitoring metrics. 
+    * The metrics are inserted into Postgresql database table.
+    * Finally, use Prefect to orchestrate the pipeline of all above. Refer [unit 3 notes](https://github.com/viviensiu/mlops-zoomcamp/blob/main/3_orchestration/NOTES.md) on Prefect.
+        * The main pipeline is `batch_monitoring_backfill` as it has the `@flow` decorator.
+        * The pipeline contains 2 steps: `prep_db()` and `calculate_metrics_postgresql()` to ensure the database and tables are ready, and to generate the Evidently monitoring metrics.
+* In virtual env `py11`, bring up Prefect server `prefect server start`.
+* Execute `python evidently_metrics_calculation.py`. There would be some hashing error flagged by Prefect but Adminer will reflect that the monitoring metrics are captured without issues.
+* You can build a new dashboard with multiple plots in Grafana using:
+```sql
+    SELECT
+    $__time(timestamp),
+    prediction_drift
+    FROM dummy_metrics 
+    WHERE $__timeFilter(timestamp)
+    ORDER BY timestamp
+
+    SELECT
+    $__time(timestamp),
+    num_drifted_columns
+    FROM dummy_metrics 
+    WHERE $__timeFilter(timestamp)
+    ORDER BY timestamp
+
+    SELECT
+    $__time(timestamp),
+    share_missing_values
+    FROM dummy_metrics 
+    WHERE $__timeFilter(timestamp)
+    ORDER BY timestamp
+```
+* Adjust the timestamps to between Feb 1, 2022 to Feb 28, 2022 to reflect the timestamps used by the sample data, so you could view the predictions plotted.
+* Adjust the colors (click on the color in legend) and plot types (right panel > `Visualizations`) as you wish.
+
+**5.8 Save Grafana Dashboard**
+* **Goal**: Saving and reusing the dashboard.
+* Create a sub folder `dashboards` under `taxi_monitoring`.
+* In `docker-compose.yml`, specify the volumes under Grafana so it knows to load from `dashboards`.
+* In `dashboards`, create `data_drift.json`.
+* Go to the Grafana dashboard you wanted to save, click `Settings > JSON Model`, copy paste into `data_drift.json`. This allows you to load the same dashboard even after stopping docker compose.
+* To prove this works:
+    * `docker compose down`
+    * `docker-compose up --build`, you could access Grafana at this step and see that the dashboard is still here but without data. Run the next step to repopulate Postgresql with data.
+    * `python evidently_metrics_calculation.py`.
+    * You should now be able to view data in Grafana.
+
+**5.9 Debugging with test suites and reports**
+* 
 
 **References**
 * [Evidently documentation](https://docs.evidentlyai.com/introduction).
