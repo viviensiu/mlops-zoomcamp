@@ -160,7 +160,18 @@
     * You should now be able to view data in Grafana.
 
 **5.9 Debugging with test suites and reports**
-* 
+* Monitoring helps us detect the time something went wrong and rectify issues on time.
+* **Goal**: Drift detection and debugging support using Evidently test suites and reports.
+* We setup a new notebook [`debugging_nyc_taxi_data.ipynb`](https://github.com/viviensiu/mlops-zoomcamp/blob/main/5_model_monitoring/taxi_monitoring/debugging_nyc_taxi_data.ipynb):
+    * Import `DataDriftPreset` from `evidently.metric_preset` to help build visual boards and address specific parts of the pipeline. This preset is for data creation moments.
+    * `TestSuite` helps to compare metric values against threshold.
+    * `DataDriftTestPreset` helps to tackle specific data-related problems using a predefined set of **data drift statistical tests**.
+    * First we specify a reference set of data as a baseline for comparison. We also load a specific data as problematic sample (difers greatly from reference set).
+    * We specify a `TestSuite(tests=[DataDriftTestPreset])` to calculate data drift tests. More tests can be specified.
+    * Run predictions on the loaded sample problematic data and fill missing values.
+    * `test_suite.run()` to run tests. Then visualise the test results using `test_suite.show(mode='inline')`. The results can also be shown in other formats e.g. HTML and JSON.
+    * We could also run reports with test suites to support analysis and debugging: `Report(metrics = [DataDriftPreset()])`. The report can either be shown in notebook or exported as HTML format.
+    * Notice that when the problematic data's distribution differs greatly from reference set, data drift is flagged by the predefined tests and can be viewed in the report. This helps with monitoring the issue and pinpoint where we need to do some debugging.
 
 **References**
 * [Evidently documentation](https://docs.evidentlyai.com/introduction).
