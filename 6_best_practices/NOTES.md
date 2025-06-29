@@ -1,5 +1,6 @@
 **Links**
 * [unit 6 repo](https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/06-best-practices)
+* This unit discusses various best practices in ML Ops, e.g. testing with Pytest, AWS service testing locally, 
 
 **6.1 Testing Python code with Pytest**
 * **Goal**: Integrate the streaming code from Unit 4 with unit test and integration test.
@@ -43,5 +44,21 @@
 * `DeepDiff`: Used for comparing 2 dictionaries of expected and actual responses.
     `DeepDiff(actual, expected)`.
 * To compare numerical values to the closest decimal using DeepDiff, set `significant_digits=<closest decimal>`.
-* Refer [`integration-test`]() folder for the setup:
-    * 
+* Refer [`integration-test`](https://github.com/viviensiu/mlops-zoomcamp/tree/main/6_best_practices/code/integration-test) folder for the setup:
+    * `run.sh`: main bash script to build docker image with a timestamp tag, export global env variable, bring up containers via docker-compose, and run `test_docker.py`. It will then log error code using `docker-compose logs` if any and brings down containers again using docker-compose.
+    * `test_docker.py`: integration test with model to compare actual and expected predictions.
+* To execute the integration test, navigate to `integration-test` folder and run `./run.sh`.
+
+**6.3 Testing cloud services with LocalStack**
+* [LocalStack](https://www.localstack.cloud/) is a fully functional local AWS cloud stack.
+* Setup:
+    * Create Kinesis stream `ride-predictions` via LocalStack in `run.sh`
+    * Add Kinesis service with port=4566 in `integration-test` > `docker-compose.yaml` using `localstack` image. Add env variable in `docker-compose.yaml` to include Kinesis Endpoint URL.
+    * Configure `model.py` to access local Kinesis endpoint (see function `create_kinesis_client`).
+    * Create integration test cases, see `test_kinesis.py`.
+* Start service with `./run.sh`. If all goes well the containers should be up and running, then delete automatically with docker-compose down, otherwise any error code not equals 0 will keep the containers running.
+
+
+
+
+
