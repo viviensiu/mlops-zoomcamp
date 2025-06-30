@@ -58,7 +58,11 @@
     * Create integration test cases, see `test_kinesis.py`.
 * Start service with `./run.sh`. If all goes well the containers should be up and running, then delete automatically with docker-compose down, otherwise any error code not equals 0 will keep the containers running.
 
-
-
+**6.4 Code quality: linting and formatting**
+* [PEP 8](https://peps.python.org/pep-0008/) - Python style guide on how code should be formatted.
+* `pylint` - a package that ensure code follows PEP 8 standard and checks for programming mistakes.
+* Setup `pylint`: `pip install pylint` or `pipenv install pylint`.
+* To check for code quality using pylint, `pylint <python script.py>`. It will output suggestions to improve code, e.g. missing-function-docstring and give an overall rating out of 10.
+* Warnings can be disabled in `pylint` by bundling them in a `.pylintrc` file, while many Python tools use `pyproject.toml` as a config file. See example in [`pyproject.toml`]().
 
 
