@@ -88,12 +88,15 @@
 **6.5 Git pre-commit hooks**
 * Git pre-commit hooks allows us to not forget running some cleaning steps, e.g. code linting, formatting and so on before we commit our code.
 * Note that post-commit also exists to run some steps after commit.
+* Package: [`pre-commit`](https://pre-commit.com/#intro)
 * `pipenv install pre-commit`.
 * In the main directory of Github workspace: `cd .git/`.
 * Then `cd hooks`, there's a `pre-commit.sample` file. We can refer to this file (a shell script) to modify and include commands to execute before every commit.
 * To run pre-commit for a sub-folder, 
     * Go to the sub-folder.
     * `git init` to create a standalone repo. This will create `.git` in here.
-    * `pre-commit sample-config` to show how to create a sample script. This is copied and renamed as [`pre-commit-config.yaml`]().
+    * `pre-commit sample-config` to show how to create a sample script. This is copied and renamed as [`pre-commit-config.yaml`](https://github.com/viviensiu/mlops-zoomcamp/blob/main/6_best_practices/code/pre-commit-config.yaml).
     * Run `pre-commit install` in `.git/hooks/` to create a `pre-commit` file in `.git/hooks/` folder.
     * Note that this is local so every time the repo is cloned, it needs to be recreated.
+* We can use pre-defined hooks or create our own. See [pre-defined hooks](https://github.com/pre-commit/pre-commit-hooks).
+* Once setup is done, everytime when we run git commit, the hooks defined will run first.
