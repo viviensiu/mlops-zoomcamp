@@ -63,6 +63,37 @@
 * `pylint` - a package that ensure code follows PEP 8 standard and checks for programming mistakes.
 * Setup `pylint`: `pip install pylint` or `pipenv install pylint`.
 * To check for code quality using pylint, `pylint <python script.py>`. It will output suggestions to improve code, e.g. missing-function-docstring and give an overall rating out of 10.
-* Warnings can be disabled in `pylint` by bundling them in a `.pylintrc` file, while many Python tools use `pyproject.toml` as a config file. See example in [`pyproject.toml`]().
+* To run pylint on all Python files in a directory, use `pylint --recursive=y
+* Warnings can be disabled in `pylint` by: 
+    * bundling them in a `.pylintrc` file, or 
+    * globally using `pyproject.toml` as a config file. See example in [`pyproject.toml`](https://github.com/viviensiu/mlops-zoomcamp/blob/main/6_best_practices/code/pyproject.toml).
+    * or just within a particular function, [example](https://pylint.pycqa.org/en/v2.12.2/faq.html#is-there-a-way-to-disable-a-message-for-a-particular-module-only):
+    ```python
+    def function1():
+        # pylint: disable=<some-message>
+    ```
+* Note that pylint would cause error code greater than 0 if the code doesn't conform to standards, even though it is logically correct. Hence it should only be something in dev env and not in production.
+* [`black`](https://pypi.org/project/black/) - takes care of PEP8 formatting.
+* To run `black`:
+    * `pip install black`.
+    * `black --diff .` to show what the changes would be without applying them.
+    * `black .` would actually apply the changes.
+    * Could also be included into `pyproject.toml`.
+* [`isort`](https://pypi.org/project/isort/) - sort imports alphabetically and automatically separate into sections and by type.
+* To run `isort`:
+    * `pip install isort`.
+    * On specific file: `isort <original .py> <sorted .py>`
+    * On all files in a directory: `isort .`
 
-
+**6.5 Git pre-commit hooks**
+* Git pre-commit hooks allows us to not forget running some cleaning steps, e.g. code linting, formatting and so on before we commit our code.
+* Note that post-commit also exists to run some steps after commit.
+* `pipenv install pre-commit`.
+* In the main directory of Github workspace: `cd .git/`.
+* Then `cd hooks`, there's a `pre-commit.sample` file. We can refer to this file (a shell script) to modify and include commands to execute before every commit.
+* To run pre-commit for a sub-folder, 
+    * Go to the sub-folder.
+    * `git init` to create a standalone repo. This will create `.git` in here.
+    * `pre-commit sample-config` to show how to create a sample script. This is copied and renamed as [`pre-commit-config.yaml`]().
+    * Run `pre-commit install` in `.git/hooks/` to create a `pre-commit` file in `.git/hooks/` folder.
+    * Note that this is local so every time the repo is cloned, it needs to be recreated.
