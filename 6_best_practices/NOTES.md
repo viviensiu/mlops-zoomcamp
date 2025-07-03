@@ -100,3 +100,30 @@
     * Note that this is local so every time the repo is cloned, it needs to be recreated.
 * We can use pre-defined hooks or create our own. See [pre-defined hooks](https://github.com/pre-commit/pre-commit-hooks).
 * Once setup is done, everytime when we run git commit, the hooks defined will run first.
+
+**6.6 Makefiles and make**
+* We use `make` to define aliases. E.g. We define `run` as an alias for a specific set of commands, and by calling `make run` we can execute these set of commands. So it is a convenient way to execute commands instead of having to type full commands everytime.
+* We could also define dependencies between aliases to ensure some command sets are executed before another. 
+* Steps:
+    * Create a `Makefile`.
+    ```bash
+    hello:
+        echo "hello world"
+    ```
+    * In command line, execute `make hello`. It will print:
+    ```bash
+    echo "hello world"
+    hello world
+    ```
+    * To add dependencies, use `alias: depend1 depend2...` example:
+    ```bash
+    saymyname: 
+        echo "I am Brian"
+    hello: saymyname
+        echo "hello world"
+    ```
+* For this unit, our Makefile will:
+    * Runs test.
+    * Perform quality checks
+    * Build Docker image.
+    * Run integration test.
